@@ -1,0 +1,77 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+  </head>
+  <style>
+		body, h1, h2, h3, h4, h5, h6 {
+			font-family: "Raleway", sans-serif
+		}
+
+		body,
+		html {
+			height: 100%;
+			line-height: 1.8;
+		}
+
+		.p {
+			display: none;
+		}
+
+		@media print {
+			#myHeader {
+				font-size: 30px;
+			}
+			.p {
+				display: initial;
+			}
+			.np {
+				display: none;
+			}
+			a[href]:after {
+				display: none;
+			}
+			header.onlyprint {
+				position: fixed;
+				/* Display only on print page (each) */
+				top: 0;
+				/* Because it's header */
+				text-align: center;
+				width: 100%;
+			}
+			footer.onlyprint {
+				position: fixed;
+				bottom: 0;
+				/* Because it's footer */
+				text-align: center;
+				width: 100%
+			}
+			@page :first {
+				header.onlyprint {
+					display: none;
+				}
+				header.onlyprintf {
+					position: relative;
+					/* Display only on print page (each) */
+					top: 0;
+					/* Because it's header */
+					text-align: center;
+					width: 100%;
+				}
+			}
+		}
+  </style>
+  <body>
+  <header class="onlyprint">Header</header>
+  <footer class="onlyprint">Footer</footer>
+  <header class="onlyprintf">First Page Header</header>
+  Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text
+  Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some
+  Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br
+  />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text
+  Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some
+  Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br
+  />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text
+  Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />Some Text Here<br />
+  </body>
+</html>
