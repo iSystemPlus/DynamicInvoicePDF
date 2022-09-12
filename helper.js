@@ -85,10 +85,24 @@ const helper = () => {
 
     let pdf = await page.pdf({
       format: 'A4',
-      margin: { left: '1cm', top: '1cm', right: '1cm', bottom: '1cm' },
+      margin: { left: '1cm', top: '1cm', right: '1cm', bottom: '1.5cm' },
       printBackground: true,
       width: 1024,
       height: 1448,
+      displayHeaderFooter: true,
+      headerTemplate: ` `,
+      footerTemplate: `
+      <div style="width: 100%; font-size: 9px;
+          padding: 5px 5px 0; color: #bbb; position: relative;">
+          <div style="position: absolute; width:100%; top: -20px;">
+            <div style="text-align: center">
+              Date: <span class="date"></span>
+              &nbsp;-&nbsp;
+              Page: <span class="pageNumber"></span>/<span class="totalPages"></span>
+            </div>
+          </div>
+      </div>
+    `,
     });
 
     console.log("page pdf 2");
