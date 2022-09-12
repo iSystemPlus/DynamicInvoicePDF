@@ -73,6 +73,9 @@ app.all(`/api/html1`, (req, res) => {
   const data = helper.getFile("./frontend/build/invoice.html");
 
   let formdata = JSON.parse(req.body.datajson || "{}");
+  let size = req.body.PageSize || "small";
+
+  console.log(size);
 
   const html = ejs.render(
       data,
@@ -84,7 +87,7 @@ app.all(`/api/html1`, (req, res) => {
 
   console.log("html");
 
-  helper.genPDF({ html }, { width: 1024, height: 1448 }, req, res)
+  helper.genPDF({ html }, { width: 1024, height: 1448, size }, req, res);
 
 });
 

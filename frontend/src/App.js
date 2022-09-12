@@ -4,6 +4,7 @@ import './App.css';
 function App() {
 
   const [status, setStatus] = useState(null);
+  const [pagesize, setPagesize] = useState('small');
 
   useEffect(()=>{
     try{
@@ -30,7 +31,7 @@ function App() {
           </div>
           <div>
             <form name='form1' method='post' action='/api/html1' target='frame3'>
-              <input type='hidden' name='dataname' value="datavalue" />
+              <input type='input' name='PageSize' value={pagesize} />
               <div>
                 <textarea name='datajson' cols="50" rows="50">
                 {
@@ -61,7 +62,9 @@ function App() {
                 </textarea>
               </div>
               <div>
-                <button onClick="document.form1.submit()">Submit</button>
+                <button type='submit' onClick={ () => setPagesize('small') }>Smallest Size</button>
+                <button type='submit' onClick={ () => setPagesize('regular') }>Regular Size</button>
+                <button type='submit' onClick={ () => setPagesize('larger') }>Large Size</button>
               </div>
             </form>
           </div>
