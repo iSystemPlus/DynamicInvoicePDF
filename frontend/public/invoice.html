@@ -107,24 +107,24 @@
             <div class=''>
               <table>
                 <tr>
-                  <td colspan=2><h2><%= locals.mycomp && locals.mycomp.compname %></h2></td>
+                  <td colspan=2><h2><%= locals.doc_comp %></h2></td>
                 </tr>
                 <tr>
-                  <td colspan=2><%= locals.mycomp && locals.mycomp.addr1 %></td>
+                  <td colspan=2><%= locals.doc_addr1 %></td>
                 </tr>
                 <tr>
-                  <td colspan=2><%= locals.mycomp && locals.mycomp.addr2 %></td>
+                  <td colspan=2><%= locals.doc_addr2 %></td>
                 </tr>
                 <tr>
                   <td>Tel :</td>
-                  <td><%= locals.mycomp && locals.mycomp.tel %></td>
+                  <td><%= locals.doc_tel %></td>
                 </tr>
                 <tr>
                   <td>Fax :</td>
-                  <td><%= locals.mycomp && locals.mycomp.fax %></td>
+                  <td><%= locals.doc_fax %></td>
                 </tr>
                 <tr>
-                  <td colspan=2><%= locals.mycomp && locals.mycomp.email %></td>
+                  <td colspan=2><%= locals.doc_email %></td>
                 </tr>
               </table>                
             </div>
@@ -132,15 +132,15 @@
               <table>
                 <tr>
                   <td>Date :</td>
-                  <td><%= locals.date %></td>
+                  <td><%= locals.order_date %></td>
                 </tr>
                 <tr>
                   <td>Invoice # :</td>
-                  <td><%= locals.orderno %></td>
+                  <td><%= locals.order_nos %></td>
                 </tr>
                 <tr>
                   <td>For :</td>
-                  <td><%= locals.orderfor %></td>
+                  <td><%= locals.order_for %></td>
                 </tr>
               </table>
             </div>
@@ -155,18 +155,18 @@
           <div class='header'>
             <div class=''>
               <table class='fit'>
-                <tr><td colspan=2><h2><%= locals.contactname %></h2></td></tr>
-                <tr><td colspan=2><%= locals.compname %></td></tr>
-                <tr><td colspan=2><%= locals.addr1 %></td></tr>
-                <tr><td colspan=2><%= locals.addr2 %></td></tr>
-                <tr><td>Tel :</td><td><%= locals.tel %></td></tr>
-                <tr><td>Fax :</td><td><%= locals.fax %></td></tr>
-                <tr><td colspan=2><%= locals.email %></td></tr>
+                <tr><td colspan=2><h2><%= locals.contact_name %></h2></td></tr>
+                <tr><td colspan=2><%= locals.contact_comp %></td></tr>
+                <tr><td colspan=2><%= locals.contact_addr1 %></td></tr>
+                <tr><td colspan=2><%= locals.contact_addr2 %></td></tr>
+                <tr><td>Tel :</td><td><%= locals.contact_tel %></td></tr>
+                <tr><td>Fax :</td><td><%= locals.contact_fax %></td></tr>
+                <tr><td colspan=2><%= locals.contact_email %></td></tr>
               </table>                
             </div>
             <div class=''>
               <table>
-                <tr><td><h3>Amount : </h3></td><td><h3><%= locals.amount %></h3></td></tr>
+                <tr><td><h3>Amount : </h3></td><td><h3><%= locals.order_amount %></h3></td></tr>
               </table>                
             </div>
           </div>

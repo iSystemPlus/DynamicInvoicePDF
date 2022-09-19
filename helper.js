@@ -40,15 +40,9 @@ const helper = () => {
       }
     }
 
-    console.log("options");
-
     let browser = await puppeteer.launch(options);
 
-    console.log("page");
-
     let page = await browser.newPage();
-
-    console.log("html");
 
     let response;
 
@@ -82,8 +76,6 @@ const helper = () => {
       width = maxWidth;
     }
 
-    console.log(size, width);
-
     await page.evaluate(`
       var div = document.createElement("div");
       div.style.position = 'absolute';
@@ -95,18 +87,13 @@ const helper = () => {
       document.body.append(div);
     `);
 
-    console.log("response");
-
     // If the page doesn't return a successful response code, we fail the check
     if(htmlURL && htmlURL.url && response.status() > 399) {
       console.log(`Failed with response code ${response.status()}`);
       throw new Error(`Failed with response code ${response.status()}`)
     }
 
-    console.log("page pdf");
-
     let pdf = await page.pdf({
-      path: './pdf.pdf',
       format: 'A4',
       margin: { left: '1cm', top: '1cm', right: '1cm', bottom: '1.5cm' },
       printBackground: true,
@@ -142,8 +129,6 @@ const helper = () => {
       `,
     });
 
-    console.log("page pdf 2");
-
     await page.close()
     await browser.close();
 
@@ -153,35 +138,9 @@ const helper = () => {
     res.status(200).send(pdf);
   }
 
-
-  //const test = async () => {
-  //  console.log('test 1');
-  //  const puppeteer = require('puppeteer');
-  //  console.log('test 2');
-  //  const browser = await puppeteer.launch({args: ["--no-sandbox", "--disable-setuid-sandbox"]});
-  //  console.log('test 3');
-  //  const page = await browser.newPage();
-  //  console.log('test 4');
-  //  await page.goto('https://community.wikia.com/wiki/Special:WikiActivity');
-  //  console.log('test 5');
-  //  //let element =  await page.$('#WikiaMainContent');
-  //  console.log('test 6');
-  //  await page.setViewport({ width: 1600, height: 2000}); // This is ignored
-  //  console.log('test 7');
-  //  if(element){
-  //    await element.screenshot({path: "./wiki.png"});
-  //  }else{
-  //    await page.screenshot({path: "./wiki.png"});
-  //  }
-  //  console.log('test 8');
-  //  await browser.close();
-  //  console.log('test 9');
-  //}
-
   return {
     getFile,
     genPDF,
-    //test
   }
 }
 
