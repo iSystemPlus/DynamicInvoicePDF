@@ -59,7 +59,14 @@
       width: 15%;
       text-align: right;
     }
-
+    table {
+      page-break-before: always;
+      page-break-inside: always; 
+    }
+    tr{
+      page-break-inside: always; 
+      page-break-after: always;
+    }
   </style>
   <body>
 
@@ -170,11 +177,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div style="white-space:pre-wrap"><%= locals.order_remark %></div>
-                </td>
-              </tr>
+
+              <% locals.order_remark.split("\n").forEach((element, i) => { %>
+                <tr>
+                  <td>
+                      <%= i %>:<%= element %>
+                  </td>
+                </tr>
+              <% }); %>
+
             </tbody>
           </table>
         </td>
