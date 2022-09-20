@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Formik } from 'formik';
+import { Formik, FieldArray, Field, ErrorMessage } from 'formik';
 import './App.css';
 
 const Ordering = {
@@ -28,7 +28,8 @@ const Ordering = {
     ['nos', 'Order #', 'INV-220909001'],
     ['for', 'Order For', 'PO-220908001'],
     ['amount', 'Amount', '1,234.00'],
-  ]
+    ['remark', 'Remark', "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n"],
+  ],
 };
 
 let AllFields = {};
@@ -37,14 +38,19 @@ Object.keys(Ordering).forEach((n1) => {
   Ordering[n1].forEach((n2) => {
     AllFields[n1+'_'+n2[0]] = n2[2]
   })
-})
+});
+
+AllFields['items'] = [
+  { 'name': 'name 1', 'desc': 'desc 1', 'up': '1.11', 'qty': 1 },
+  { 'name': 'name 2', 'desc': 'desc 2', 'up': '2.22', 'qty': 2 },
+  { 'name': 'name 3', 'desc': 'desc 3', 'up': '3.33', 'qty': 3 },
+];
 
 function App() {
 
   const [status, setStatus] = useState(null);
   const [pagesize, setPagesize] = useState('small');
   const [datajson, setDatajson] = useState('{}');
-  const [pdfblob, setPdfblob] = useState(null);
   const [pdfbase64, setPdfbase64] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -109,7 +115,16 @@ function App() {
                 ...AllFields,
               }}
               validate={values => {
+
+                let ttl = 0;
+                values.items.forEach((v) => {
+                  ttl = ttl + (v.qty * v.up);
+                });
+                values.order_amount = ttl.toFixed(2);
+
                 setDatajson(JSON.stringify(values, null, 2));
+
+
                 return {};
                 //const errors = {};
                 //if (!values.email) {
@@ -138,10 +153,12 @@ function App() {
                handleSubmit,
                isSubmitting,
                /* and other goodies */
+               ...formHelpers
              }) => (
                 <form onSubmit={handleSubmit} name='invoice_form' method='post' action='/api/makeinv' target='frame3'>
                   <input type='hidden' name='PageSize' onChange={ e => setPagesize(e.target.value) } value={pagesize} />
                   <input type='hidden' name='datajson' value={ datajson } onChange={ e => setDatajson(e.target.value) }  />
+
                   <h4>DOC</h4>
                   {
                     Ordering['doc'].map((n2, i) => (
@@ -175,19 +192,99 @@ function App() {
                       </div>
                     ))
                   }
-
-                <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('small') }>Smallest Size</button>
-                <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('regular') }>Regular Size</button>
-                <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('larger') }>Large Size</button>
-
+                  <h4>Items</h4>
+                  <FieldArray name="items">
+                    {({ insert, remove, push, ...arrayHelpers }) => (
+                      <div className="items">
+                        <div className="row title">
+                          <div className="col_name">Name</div>
+                          <div className="col_desc">Description</div>
+                          <div className="col_up">Unit Price</div>
+                          <div className="col_qty">Qty</div>
+                          <div className="col_amt">Amount</div>
+                        </div>
+                        {values.items.length > 0 &&
+                          values.items.map((friend, index) => (
+                            <div className="row" key={index}>
+                              <div className="col_name">
+                                <input
+                                    type="text"
+                                    name={`items.${index}.name`}
+                                    value={values.items[index].name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                  />
+                              </div>
+                              <div className="col_desc">
+                                <input
+                                    type="text"
+                                    name={`items.${index}.desc`}
+                                    value={values.items[index].desc}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                  />
+                              </div>
+                              <div className="col_up">
+                                <input
+                                    type="text"
+                                    name={`items.${index}.up`}
+                                    value={values.items[index].up}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                  />
+                              </div>
+                              <div className="col_qty">
+                                <input
+                                    type="text"
+                                    name={`items.${index}.qty`}
+                                    value={values.items[index].qty}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                  />
+                              </div>
+                              <div className="col_amt">
+                                {
+                                  (parseFloat(values.items[index].up || 0) * parseFloat(values.items[index].qty || 0)).toFixed(2)
+                                }
+                              </div>
+                              <div className="col">
+                                <button
+                                  type="button"
+                                  className="secondary"
+                                  onClick={() => remove(index)}
+                                >
+                                  X
+                                </button>
+                              </div>
+                            </div>
+                          ))
+                        }
+                        <div style={{textAlign: 'left'}}>
+                          <button
+                            type="button"
+                            className="secondary"
+                            onClick={() => push({ name: '', desc: '', up: '', qty: '' })}
+                          >
+                            Add Item
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </FieldArray>
+                  <h4>Remark</h4>
+                  <div>
+                    <textarea cols="100" rows="10" name={ 'order_remark' } onChange={handleChange} onBlur={handleBlur} value={values['order_remark']} />
+                  </div>
+                <div>
+                  <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('small') }>Smallest Size</button>
+                  <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('regular') }>Regular Size</button>
+                  <button type='submit' disabled={isSubmitting} onClick={ () => setPagesize('larger') }>Large Size</button>
+                </div>
                </form>
              )}
             </Formik>
           </div>
         </div>
-        {
-          pdfblob ? (<iframe style={{width:'500px', height:'780px', border:'1px solid lightgray'}} title="3" src={pdfblob} name='frame_pdf'></iframe>) : null
-        }
         {
           loading ? <div width='500'>Rendering Invoice from Server ...</div> : null
         }
