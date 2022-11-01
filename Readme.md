@@ -1,1 +1,2 @@
-echo "# DynamicInvoicePDF""# DynamicInvoicePDF" 
+### DynamicInvoicePDF
+Generate a dynamic invoice in PDF format
